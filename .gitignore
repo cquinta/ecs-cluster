@@ -1,4 +1,6 @@
 # Local .terraform directories
+comandos*
+
 **/.terraform/*
 
 # .tfstate files
