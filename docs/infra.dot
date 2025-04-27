@@ -1,0 +1,69 @@
+digraph INFRA {
+  node [ color = "black", fillcolor = "#E6E6E6", height =1, style = "filled,bold,rounded", fontname = "Arial" ];
+  "spots-asg" [ label = "spots-asg
+(AWS::AutoScaling::AutoScalingGroup)", shape =rectangle, fillcolor = "#B7E0FF" ];
+  "spots-capacity-provider" [ label = "spots-capacity-provider
+(AWS::ECS::CapacityProvider)", shape =rectangle, fillcolor = "#B7E0FF" ];
+  "main-security-group" [ label = "main-security-group
+(AWS::EC2::SecurityGroup)" ];
+  "subnet-ranges-security-group-rule" [ label = "subnet-ranges-security-group-rule
+(AWS::EC2::SecurityGroupIngress)" ];
+  "on-demand-launch-template" [ label = "on-demand-launch-template
+(AWS::EC2::LaunchTemplate)", shape =rectangle, fillcolor = "#B7E0FF" ];
+  "on-demand-asg" [ label = "on-demand-asg
+(AWS::AutoScaling::AutoScalingGroup)", shape =rectangle, fillcolor = "#B7E0FF" ];
+  "on-demand-capacity-provider" [ label = "on-demand-capacity-provider
+(AWS::ECS::CapacityProvider)", shape =rectangle, fillcolor = "#B7E0FF" ];
+  "spots-launch-template" [ label = "spots-launch-template
+(AWS::EC2::LaunchTemplate)", shape =rectangle, fillcolor = "#B7E0FF" ];
+  "load-balancer" [ label = "load-balancer
+(AWS::ElasticLoadBalancingV2::LoadBalancer)" ];
+  "load-balancer-listener" [ label = "load-balancer-listener
+(AWS::ElasticLoadBalancingV2::Listener)" ];
+  "load-balancer-security-group" [ label = "load-balancer-security-group
+(AWS::EC2::SecurityGroup)" ];
+  "ecs-cluster" [ label = "ecs-cluster
+(AWS::ECS::Cluster)", shape =rectangle, fillcolor = "#B7E0FF" ];
+  "vpc" [ label = "vpc
+(AWS::EC2::VPC)" ];
+  "private-subnet-1a" [ label = "private-subnet-1a
+(AWS::EC2::Subnet)" ];
+  "private-subnet-1b" [ label = "private-subnet-1b
+(AWS::EC2::Subnet)" ];
+  "private-subnet-1c" [ label = "private-subnet-1c
+(AWS::EC2::Subnet)" ];
+  "public-subnet-1" [ label = "public-subnet-1
+(AWS::EC2::Subnet)" ];
+  "public-subnet-2" [ label = "public-subnet-2
+(AWS::EC2::Subnet)" ];
+  "public-subnet-3" [ label = "public-subnet-3
+(AWS::EC2::Subnet)" ];
+  "spots-asg" -> "spots-launch-template";
+  "spots-asg" -> "private-subnet-1a";
+  "spots-asg" -> "private-subnet-1b";
+  "spots-asg" -> "private-subnet-1c";
+  "spots-capacity-provider" -> "spots-asg";
+  "main-security-group" -> "vpc";
+  "subnet-ranges-security-group-rule" -> "main-security-group";
+  "on-demand-launch-template" -> "main-security-group";
+  "on-demand-asg" -> "on-demand-launch-template";
+  "on-demand-asg" -> "private-subnet-1a";
+  "on-demand-asg" -> "private-subnet-1b";
+  "on-demand-asg" -> "private-subnet-1c";
+  "on-demand-capacity-provider" -> "on-demand-asg";
+  "spots-launch-template" -> "main-security-group";
+  "load-balancer" -> "public-subnet-1";
+  "load-balancer" -> "public-subnet-2";
+  "load-balancer" -> "public-subnet-3";
+  "load-balancer" -> "load-balancer-security-group";
+  "load-balancer-listener" -> "load-balancer";
+  "load-balancer-security-group" -> "vpc";
+  "ecs-cluster" -> "on-demand-capacity-provider";
+  "ecs-cluster" -> "spots-capacity-provider";
+  "private-subnet-1a" -> "vpc";
+  "private-subnet-1b" -> "vpc";
+  "private-subnet-1c" -> "vpc";
+  "public-subnet-1" -> "vpc";
+  "public-subnet-2" -> "vpc";
+  "public-subnet-3" -> "vpc";
+}
