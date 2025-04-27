@@ -11,11 +11,13 @@ resource "aws_ecs_cluster_capacity_providers" "main" {
 
   capacity_providers = [
     aws_ecs_capacity_provider.on_demand.name,
-    aws_ecs_capacity_provider.spots.name
+    aws_ecs_capacity_provider.spots.name,
+    "FARGATE",
+    "FARGATE_SPOT"
   ]
   default_capacity_provider_strategy {
-    base              = 0
+    base              = 1
     weight            = 100
-    capacity_provider = aws_ecs_capacity_provider.on_demand.name
+    capacity_provider = "FARGATE"
   }
 }
