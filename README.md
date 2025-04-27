@@ -71,9 +71,14 @@ terraform plan
 ```
 
 2. Apply the infrastructure:
+
+For Dev: 
 ```bash
-terraform apply
+terraform apply --auto-approve -var-file=environment/dev/terraform.tfvars
 ```
+For Prod:
+```bash
+terraform apply --auto-approve -var-file=environment/prod/terraform.tfvars
 
 3. Verify the deployment:
 ```bash
